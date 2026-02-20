@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Boots | Chaussures de Football Personnalisées</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #09090b;
+            color: #fafafa;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .glass-nav {
+            background: rgba(9, 9, 11, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #27272a;
+        }
+
+        .text-gradient-primary {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col">
+
+<!-- HERO IMAGE SECTION TEST (Images Will Show Here) -->
+
+<section class="py-20">
+    <div class="container mx-auto px-6">
+        <h1 class="text-5xl font-bold mb-10">
+            Ton Identité. <span class="text-gradient-primary">Tes Crampons.</span>
+        </h1>
+
+        <div class="grid md:grid-cols-2 gap-10">
+            
+            <img 
+                src="https://images.unsplash.com/photo-1600250395378-958b417c8261?q=80&w=1000&auto=format&fit=crop"
+                alt="Crampons personnalisés"
+                class="rounded-xl shadow-2xl w-full object-cover"
+            >
+
+            <img 
+                src="https://images.unsplash.com/photo-1579290642270-4351a9956555?q=80&w=800&auto=format&fit=crop"
+                alt="Crampon détail"
+                class="rounded-xl shadow-2xl w-full object-cover"
+            >
+
+        </div>
+    </div>
+</section>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+    lucide.createIcons();
+    AOS.init();
+</script>
+
+</body>
+</html>
