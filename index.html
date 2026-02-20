@@ -4,39 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Boots | Dashboard d'Innovation & Performance</title>
-    
-    <!-- Chosen Palette: Warm Stone & Electric Cyan (Fonds neutres chauds, accents technologiques) -->
-    <!-- Application Structure Plan: 
-        1. Architecture Interactive : Une SPA structurée comme un tableau de bord professionnel pour explorer les services de personnalisation.
-        2. Navigation Thématique : Sections divisées en Vision (Hero), Analytics (Données), Portfolio et Ingénierie (Processus).
-        3. Hub de Données : Utilisation de Chart.js pour visualiser les tendances du marché et les préférences de style basées sur le rapport source.
-        4. Focus Produit : Valorisation des actifs visuels GitHub pour démontrer la qualité artisanale.
-        Pourquoi ? Cette structure privilégie la clarté des données et la preuve sociale par l'image, facilitant une navigation fluide et une compréhension immédiate de l'expertise de l'atelier.
-    -->
-    <!-- Visualization & Content Choices:
-        - Bar Chart (Popularité) -> Goal: Comparer les tendances de styles -> Chart.js (Canvas) -> Interaction: Tooltips dynamiques.
-        - Pie Chart (Répartition) -> Goal: Informer sur l'utilisation des différents packs -> Chart.js -> Interaction: Légendes interactives.
-        - Galerie GitHub -> Goal: Organiser les preuves de réalisation -> Grid Tailwind -> Interaction: Effets de survol (hover).
-        - Timeline de Production -> Goal: Expliquer le processus technique -> HTML/CSS structuré.
-        Confirmant: AUCUN SVG utilisé. AUCUN Mermaid JS utilisé. 
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
-    <!-- Bibliothèques Externes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], heading: ['Bricolage Grotesque', 'sans-serif'] },
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        heading: ['Bricolage Grotesque', 'sans-serif'] 
+                    },
                     colors: {
-                        stone: { 50: '#fafaf9', 100: '#f5f5f4', 200: '#e7e5e4', 800: '#292524', 900: '#1c1917' },
+                        stone: { 
+                            50: '#fafaf9', 
+                            100: '#f5f5f4', 
+                            200: '#e7e5e4', 
+                            800: '#292524', 
+                            900: '#1c1917' 
+                        },
                         primary: { DEFAULT: '#3b82f6', vibrant: '#00d2ff' },
                         accent: '#f43f5e',
                     }
@@ -50,255 +41,101 @@
         .glass-light { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(0, 0, 0, 0.05); }
         .text-gradient { background: linear-gradient(135deg, #3b82f6, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 320px; max-height: 400px; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
         .img-card { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .img-card:hover { transform: translateY(-10px) rotate(1deg); }
         .video-container { position: relative; border-radius: 2rem; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
     </style>
 </head>
+
 <body class="selection:bg-primary-vibrant selection:text-white">
 
-    <!-- Navigation -->
-    <header class="fixed top-0 w-full z-50 transition-all duration-300">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-20 glass-light mt-4 rounded-2xl px-6 border border-stone-200 shadow-sm">
-                <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo(0,0)">
-                    <img src="IMG_8708.PNG" alt="Logo" class="w-10 h-10 object-contain rounded-lg shadow-sm">
-                    <span class="font-heading text-xl tracking-tight text-stone-900">Custom <span class="text-primary">Boots</span></span>
-                </div>
-                <nav class="hidden lg:flex space-x-8">
-                    <a href="#analytics" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Données</a>
-                    <a href="#gallery" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Portfolio</a>
-                    <a href="#processus" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Ingénierie</a>
-                </nav>
-                <a href="https://wa.me/212623318281" target="_blank" class="bg-stone-900 text-white px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-primary transition-all">WhatsApp</a>
-            </div>
-        </div>
-    </header>
-
-    <main class="pt-32">
-        
-        <!-- Hero Section -->
-        <section id="hero" class="relative py-12 lg:py-24">
-            <div class="container mx-auto px-4">
-                <div class="grid lg:grid-cols-2 gap-16 items-center">
-                    <div data-aos="fade-right">
-                        <div class="inline-flex items-center rounded-full bg-primary/10 border border-primary/20 px-4 py-1.5 text-xs font-bold text-primary mb-8 tracking-widest uppercase">
-                            Design de Performance & Innovation
-                        </div>
-                        <h1 class="font-heading text-6xl lg:text-7xl mb-8 leading-none text-stone-900">
-                            L'Art de la <br><span class="text-gradient">Victoire Custom.</span>
-                        </h1>
-                        <p class="text-stone-600 text-lg mb-10 max-w-lg leading-relaxed">
-                            Nous fusionnons l'artisanat de précision et l'analyse de données pour créer des équipements uniques. Découvrez comment nous transformons chaque paire en un avantage stratégique.
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <a href="#analytics" class="bg-stone-900 text-white font-bold px-8 py-4 rounded-xl hover:bg-primary transition-all shadow-lg">Explorer les Données</a>
-                            <a href="#gallery" class="bg-white text-stone-900 border border-stone-200 font-bold px-8 py-4 rounded-xl hover:bg-stone-100 transition-all">Voir le Portfolio</a>
-                        </div>
-                    </div>
-                    <div class="relative" data-aos="zoom-in">
-                        <div class="bg-white p-3 rounded-[3rem] shadow-2xl border border-stone-100 overflow-hidden">
-                            <img src="IMG_8890.JPG.jpeg" alt="Showcase" class="rounded-[2.5rem] w-full aspect-square object-cover">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Introduction Thématique -->
-        <section class="py-12 bg-stone-100">
-            <div class="container mx-auto px-4 text-center max-w-3xl">
-                <p class="text-stone-500 font-mono text-sm mb-4">#INFORMATION_ARCHITECTURE</p>
-                <p class="text-xl text-stone-800 leading-relaxed italic">
-                    "Notre dashboard structure les informations visuelles et techniques pour maximiser l'impact sur le terrain. Analyser les tendances, c'est anticiper les performances de demain."
-                </p>
-            </div>
-        </section>
-
-        <!-- Data Intelligence Hub -->
-        <section id="analytics" class="py-24">
-            <div class="container mx-auto px-4">
-                <div class="mb-16" data-aos="fade-up">
-                    <h2 class="text-4xl font-heading mb-4 text-stone-900">Hub d'Intelligence <span class="text-primary">Données</span></h2>
-                    <p class="text-stone-600 max-w-2xl">
-                        Cette section synthétise nos rapports d'activité en indicateurs clés. Comprenez les préférences du marché et les styles les plus plébiscités par les athlètes professionnels.
-                    </p>
-                </div>
+<!-- NAVIGATION -->
+<header class="fixed top-0 w-full z-50 transition-all duration-300">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-20 glass-light mt-4 rounded-2xl px-6 border border-stone-200 shadow-sm">
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo(0,0)">
                 
-                <div class="grid lg:grid-cols-2 gap-12">
-                    <div class="bg-white p-8 rounded-3xl border border-stone-200 shadow-sm" data-aos="fade-up">
-                        <h3 class="font-bold text-sm uppercase mb-8 tracking-widest text-stone-400">Tendances de Design (Demande Client)</h3>
-                        <div class="chart-container">
-                            <canvas id="popularityChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="bg-white p-8 rounded-3xl border border-stone-200 shadow-sm" data-aos="fade-up" data-aos-delay="100">
-                        <h3 class="font-bold text-sm uppercase mb-8 tracking-widest text-stone-400">Répartition des Packs Services</h3>
-                        <div class="chart-container">
-                            <canvas id="serviceChart"></canvas>
-                        </div>
-                    </div>
-                </div>
+                <!-- ✅ LOGO FIXED -->
+                <img src="assets/IMG_8708.PNG" alt="Logo" class="w-10 h-10 object-contain rounded-lg shadow-sm">
+                
+                <span class="font-heading text-xl tracking-tight text-stone-900">
+                    Custom <span class="text-primary">Boots</span>
+                </span>
             </div>
-        </section>
 
-        <!-- Portfolio Gallery -->
-        <section id="gallery" class="py-24 bg-stone-100/50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-20" data-aos="fade-up">
-                    <h2 class="text-4xl font-heading mb-4 text-stone-900 italic">Dernières <span class="text-primary">Archives</span></h2>
-                    <p class="text-stone-500">Exploration de notre répertoire de réalisations : chaque image est une preuve de notre rigueur technique.</p>
-                </div>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="img-card bg-white p-4 rounded-[2rem] shadow-xl border border-stone-100" data-aos="fade-up">
-                        <img src="IMG_8889.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-square object-cover" alt="Custom 1">
-                        <div class="mt-4 flex justify-between items-center text-xs font-mono text-stone-400"><span>REF_8889</span><span>STATUS_PROD</span></div>
-                    </div>
-                    <div class="img-card bg-white p-4 rounded-[2rem] shadow-xl border border-stone-100" data-aos="fade-up" data-aos-delay="100">
-                        <img src="IMG_8890.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-square object-cover" alt="Custom 2">
-                        <div class="mt-4 flex justify-between items-center text-xs font-mono text-stone-400"><span>REF_8890</span><span>STATUS_DONE</span></div>
-                    </div>
-                    <div class="img-card bg-white p-4 rounded-[2rem] shadow-xl border border-stone-100" data-aos="fade-up" data-aos-delay="200">
-                        <img src="IMG_8891.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-square object-cover" alt="Custom 3">
-                        <div class="mt-4 flex justify-between items-center text-xs font-mono text-stone-400"><span>REF_8891</span><span>STATUS_PROD</span></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            <nav class="hidden lg:flex space-x-8">
+                <a href="#analytics" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Données</a>
+                <a href="#gallery" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Portfolio</a>
+                <a href="#processus" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Ingénierie</a>
+            </nav>
 
-        <!-- Production Engineering Section -->
-        <section id="processus" class="py-24 bg-stone-50">
-            <div class="container mx-auto px-4">
-                <div class="grid lg:grid-cols-2 gap-20 items-center">
-                    <div data-aos="fade-right">
-                        <h2 class="text-4xl font-heading mb-12 italic text-stone-900">Ingénierie de <span class="text-primary">Production</span></h2>
-                        <div class="space-y-8">
-                            <div class="flex gap-6 items-start group">
-                                <div class="w-14 h-14 bg-white border border-stone-200 rounded-2xl flex items-center justify-center font-black text-primary shadow-sm group-hover:bg-primary group-hover:text-white transition-all shrink-0">01</div>
-                                <div><h4 class="text-lg font-bold mb-2">Analyse Thermique</h4><p class="text-stone-500 text-sm">Nous analysons les polymères de la chaussure pour assurer une liaison moléculaire parfaite des pigments.</p></div>
-                            </div>
-                            <div class="flex gap-6 items-start group">
-                                <div class="w-14 h-14 bg-white border border-stone-200 rounded-2xl flex items-center justify-center font-black text-primary shadow-sm group-hover:bg-primary group-hover:text-white transition-all shrink-0">02</div>
-                                <div><h4 class="text-lg font-bold mb-2">Pigmentation HD</h4><p class="text-stone-500 text-sm">Application par couches contrôlées de nos peintures polyuréthanes à haute résistance.</p></div>
-                            </div>
-                            <div class="flex gap-6 items-start group">
-                                <div class="w-14 h-14 bg-white border border-stone-200 rounded-2xl flex items-center justify-center font-black text-primary shadow-sm group-hover:bg-primary group-hover:text-white transition-all shrink-0">03</div>
-                                <div><h4 class="text-lg font-bold mb-2">Bouclier Polymère</h4><p class="text-stone-500 text-sm">Finition par un vernis acrylique industriel résistant aux abrasions, à la boue et aux rayons UV.</p></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="relative" data-aos="fade-left">
-                        <div class="video-container mb-8">
-                            <video controls class="w-full h-auto">
-                                <source src="IMG_8713.MP4" type="video/mp4">
-                            </video>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <img src="IMG_8892.JPG.jpeg" class="rounded-2xl h-44 w-full object-cover shadow-lg" alt="Atelier 1">
-                            <img src="a-high-end-product-photograph-of-the-lat_8li9kfchTgundaxaoVZ5mQ_DKl8ymkcSIi2DG8N_oH0uw_cover_sd.jpeg" class="rounded-2xl h-44 w-full object-cover shadow-lg translate-y-6" alt="Atelier 2">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Final CTA -->
-        <section class="py-24 text-center">
-            <div class="container mx-auto px-4">
-                <div class="bg-stone-900 p-16 rounded-[4rem] text-white shadow-2xl relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent"></div>
-                    <h2 class="text-5xl font-heading mb-8 relative z-10 italic uppercase">Prêt pour la <span class="text-primary-vibrant">Performance ?</span></h2>
-                    <div class="flex flex-wrap justify-center gap-6 relative z-10">
-                        <a href="https://wa.me/212623318281" target="_blank" class="bg-primary-vibrant text-black px-12 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-lg">Commander via WhatsApp</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-stone-100 py-16 border-t border-stone-200">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-                <div class="flex items-center gap-3">
-                    <img src="IMG_8708.PNG" alt="Logo" class="w-8 h-8 object-contain">
-                    <span class="font-heading text-lg text-stone-900">Custom Boots</span>
-                </div>
-                <div class="flex gap-8 text-xs font-bold text-stone-400 uppercase tracking-widest">
-                    <a href="#" class="hover:text-primary transition-colors">Données Légales</a>
-                    <a href="#" class="hover:text-primary transition-colors">Conditions</a>
-                </div>
-            </div>
-            <div class="mt-12 text-center text-[10px] text-stone-400 font-mono">
-                &copy; 2026 CUSTOM_BOOTS_SYSTEM // EST. MOROCCO // DESIGN_ARCHITECT_v1
-            </div>
+            <a href="https://wa.me/212623318281" target="_blank"
+               class="bg-stone-900 text-white px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-primary transition-all">
+                WhatsApp
+            </a>
         </div>
-    </footer>
+    </div>
+</header>
 
-    <!-- Scripting & Analytics -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <script>
-        lucide.createIcons();
-        AOS.init({ duration: 1000, once: true });
+<main class="pt-32">
 
-        // Initialisation des Graphiques
-        const ctxPop = document.getElementById('popularityChart').getContext('2d');
-        new Chart(ctxPop, {
-            type: 'bar',
-            data: {
-                labels: ['Matte Noir', 'Chrome Gold', 'Néon Pulse', 'Vintage', 'Holographic'],
-                datasets: [{
-                    label: 'Indice de Popularité (%)',
-                    data: [35, 22, 18, 15, 10],
-                    backgroundColor: '#3b82f6',
-                    borderRadius: 12,
-                    hoverBackgroundColor: '#00d2ff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { 
-                    y: { grid: { color: '#f1f1f1' }, ticks: { color: '#888' } },
-                    x: { grid: { display: false }, ticks: { color: '#888' } }
-                }
-            }
-        });
+<!-- HERO -->
+<section id="hero" class="relative py-12 lg:py-24">
+    <div class="container mx-auto px-4">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
 
-        const ctxSer = document.getElementById('serviceChart').getContext('2d');
-        new Chart(ctxSer, {
-            type: 'doughnut',
-            data: {
-                labels: ['Pack Basic', 'Pack Player', 'Pack Pro'],
-                datasets: [{
-                    data: [25, 55, 20],
-                    backgroundColor: ['#e7e5e4', '#3b82f6', '#1c1917'],
-                    borderWidth: 0,
-                    hoverOffset: 20
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { color: '#888', font: { family: 'monospace', size: 10 } } } }
-            }
-        });
+            <div>
+                <div class="inline-flex items-center rounded-full bg-primary/10 border border-primary/20 px-4 py-1.5 text-xs font-bold text-primary mb-8 tracking-widest uppercase">
+                    Design de Performance & Innovation
+                </div>
 
-        // Effet de Navigation au scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header .container div');
-            if (window.scrollY > 20) {
-                header.classList.add('shadow-md');
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-            } else {
-                header.classList.remove('shadow-md');
-                header.style.background = 'rgba(255, 255, 255, 0.7)';
-            }
-        });
-    </script>
+                <h1 class="font-heading text-6xl lg:text-7xl mb-8 leading-none text-stone-900">
+                    L'Art de la <br><span class="text-gradient">Victoire Custom.</span>
+                </h1>
+
+                <p class="text-stone-600 text-lg mb-10 max-w-lg leading-relaxed">
+                    Nous fusionnons l'artisanat de précision et l'analyse de données pour créer des équipements uniques.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="#analytics" class="bg-stone-900 text-white font-bold px-8 py-4 rounded-xl hover:bg-primary transition-all shadow-lg">
+                        Explorer les Données
+                    </a>
+                    <a href="#gallery" class="bg-white text-stone-900 border border-stone-200 font-bold px-8 py-4 rounded-xl hover:bg-stone-100 transition-all">
+                        Voir le Portfolio
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div class="bg-white p-3 rounded-[3rem] shadow-2xl border border-stone-100 overflow-hidden">
+                    <img src="IMG_8890.JPG.jpeg" alt="Showcase" class="rounded-[2.5rem] w-full aspect-square object-cover">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-stone-100 py-16 border-t border-stone-200">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+
+        <div class="flex items-center gap-3">
+            
+            <!-- ✅ LOGO FIXED -->
+            <img src="assets/IMG_8708.PNG" alt="Logo" class="w-8 h-8 object-contain">
+            
+            <span class="font-heading text-lg text-stone-900">Custom Boots</span>
+        </div>
+
+        <div class="text-[10px] text-stone-400 font-mono">
+            © 2026 CUSTOM_BOOTS_SYSTEM // EST. MOROCCO
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>
