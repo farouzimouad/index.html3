@@ -1,141 +1,187 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Boots | Dashboard d'Innovation & Performance</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Boots | Dashboard d'Innovation & Performance</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'], 
-                        heading: ['Bricolage Grotesque', 'sans-serif'] 
-                    },
-                    colors: {
-                        stone: { 
-                            50: '#fafaf9', 
-                            100: '#f5f5f4', 
-                            200: '#e7e5e4', 
-                            800: '#292524', 
-                            900: '#1c1917' 
-                        },
-                        primary: { DEFAULT: '#3b82f6', vibrant: '#00d2ff' },
-                        accent: '#f43f5e',
-                    }
-                }
-            }
-        }
-    </script>
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+fontFamily: { sans: ['Inter'], heading: ['Bricolage Grotesque'] },
+colors: {
+stone: { 50:'#fafaf9',100:'#f5f5f4',200:'#e7e5e4',800:'#292524',900:'#1c1917' },
+primary:{ DEFAULT:'#3b82f6', vibrant:'#00d2ff' }
+}
+}
+}
+}
+</script>
 
-    <style>
-        body { background-color: #fafaf9; color: #1c1917; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-        .glass-light { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(0, 0, 0, 0.05); }
-        .text-gradient { background: linear-gradient(135deg, #3b82f6, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 320px; max-height: 400px; }
-        .img-card { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .img-card:hover { transform: translateY(-10px) rotate(1deg); }
-        .video-container { position: relative; border-radius: 2rem; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
-    </style>
+<style>
+body { background:#fafaf9; color:#1c1917; overflow-x:hidden;}
+.glass-light { background:rgba(255,255,255,0.7); backdrop-filter:blur(12px);}
+.text-gradient { background:linear-gradient(135deg,#3b82f6,#00d2ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+.chart-container { position:relative;width:100%;height:320px;}
+.img-card { transition:.5s;}
+.img-card:hover { transform:translateY(-10px) rotate(1deg);}
+.video-container { border-radius:2rem; overflow:hidden;}
+</style>
 </head>
 
 <body class="selection:bg-primary-vibrant selection:text-white">
 
 <!-- NAVIGATION -->
-<header class="fixed top-0 w-full z-50 transition-all duration-300">
-    <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between h-20 glass-light mt-4 rounded-2xl px-6 border border-stone-200 shadow-sm">
-            <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo(0,0)">
-                
-                <!-- ✅ LOGO FIXED -->
-                <img src="assets/IMG_8708.PNG" alt="Logo" class="w-10 h-10 object-contain rounded-lg shadow-sm">
-                
-                <span class="font-heading text-xl tracking-tight text-stone-900">
-                    Custom <span class="text-primary">Boots</span>
-                </span>
-            </div>
+<header class="fixed top-0 w-full z-50">
+<div class="container mx-auto px-4">
+<div class="flex items-center justify-between h-20 glass-light mt-4 rounded-2xl px-6 shadow-sm">
 
-            <nav class="hidden lg:flex space-x-8">
-                <a href="#analytics" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Données</a>
-                <a href="#gallery" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Portfolio</a>
-                <a href="#processus" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Ingénierie</a>
-            </nav>
+<div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+<img src="assets/IMG_8708.PNG" class="w-10 h-10 object-contain rounded-lg">
+<span class="font-heading text-xl">Custom <span class="text-primary">Boots</span></span>
+</div>
 
-            <a href="https://wa.me/212623318281" target="_blank"
-               class="bg-stone-900 text-white px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-primary transition-all">
-                WhatsApp
-            </a>
-        </div>
-    </div>
+<nav class="hidden lg:flex space-x-8 text-xs font-bold uppercase tracking-widest text-stone-500">
+<a href="#analytics" class="hover:text-primary">Données</a>
+<a href="#gallery" class="hover:text-primary">Portfolio</a>
+<a href="#processus" class="hover:text-primary">Ingénierie</a>
+</nav>
+
+<a href="https://wa.me/212623318281" target="_blank"
+class="bg-stone-900 text-white px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-primary">
+WhatsApp
+</a>
+
+</div>
+</div>
 </header>
 
 <main class="pt-32">
 
 <!-- HERO -->
-<section id="hero" class="relative py-12 lg:py-24">
-    <div class="container mx-auto px-4">
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
+<section class="py-12 lg:py-24">
+<div class="container mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
 
-            <div>
-                <div class="inline-flex items-center rounded-full bg-primary/10 border border-primary/20 px-4 py-1.5 text-xs font-bold text-primary mb-8 tracking-widest uppercase">
-                    Design de Performance & Innovation
-                </div>
+<div>
+<h1 class="font-heading text-6xl lg:text-7xl mb-8">
+L'Art de la <br><span class="text-gradient">Victoire Custom.</span>
+</h1>
+<p class="text-stone-600 mb-10">
+Nous transformons chaque paire en avantage stratégique.
+</p>
+</div>
 
-                <h1 class="font-heading text-6xl lg:text-7xl mb-8 leading-none text-stone-900">
-                    L'Art de la <br><span class="text-gradient">Victoire Custom.</span>
-                </h1>
+<div class="bg-white p-3 rounded-[3rem] shadow-2xl">
+<img src="assets/IMG_8890.JPG.jpeg" class="rounded-[2.5rem] w-full aspect-square object-cover">
+</div>
 
-                <p class="text-stone-600 text-lg mb-10 max-w-lg leading-relaxed">
-                    Nous fusionnons l'artisanat de précision et l'analyse de données pour créer des équipements uniques.
-                </p>
+</div>
+</section>
 
-                <div class="flex flex-wrap gap-4">
-                    <a href="#analytics" class="bg-stone-900 text-white font-bold px-8 py-4 rounded-xl hover:bg-primary transition-all shadow-lg">
-                        Explorer les Données
-                    </a>
-                    <a href="#gallery" class="bg-white text-stone-900 border border-stone-200 font-bold px-8 py-4 rounded-xl hover:bg-stone-100 transition-all">
-                        Voir le Portfolio
-                    </a>
-                </div>
-            </div>
+<!-- ANALYTICS -->
+<section id="analytics" class="py-24">
+<div class="container mx-auto px-4 grid lg:grid-cols-2 gap-12">
 
-            <div class="relative">
-                <div class="bg-white p-3 rounded-[3rem] shadow-2xl border border-stone-100 overflow-hidden">
-                    <img src="IMG_8890.JPG.jpeg" alt="Showcase" class="rounded-[2.5rem] w-full aspect-square object-cover">
-                </div>
-            </div>
+<div class="bg-white p-8 rounded-3xl shadow-sm">
+<h3 class="text-sm uppercase mb-8 text-stone-400">Tendances Design</h3>
+<div class="chart-container">
+<canvas id="popularityChart"></canvas>
+</div>
+</div>
 
-        </div>
-    </div>
+<div class="bg-white p-8 rounded-3xl shadow-sm">
+<h3 class="text-sm uppercase mb-8 text-stone-400">Répartition Packs</h3>
+<div class="chart-container">
+<canvas id="serviceChart"></canvas>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="py-24 bg-stone-100/50">
+<div class="container mx-auto px-4 grid md:grid-cols-3 gap-8">
+
+<div class="img-card bg-white p-4 rounded-[2rem] shadow-xl">
+<img src="assets/IMG_8889.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-square object-cover">
+</div>
+
+<div class="img-card bg-white p-4 rounded-[2rem] shadow-xl">
+<img src="assets/IMG_8890.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-square object-cover">
+</div>
+
+<div class="img-card bg-white p-4 rounded-[2rem] shadow-xl">
+<img src="assets/IMG_8891.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-square object-cover">
+</div>
+
+</div>
+</section>
+
+<!-- PROCESS -->
+<section id="processus" class="py-24">
+<div class="container mx-auto px-4 grid lg:grid-cols-2 gap-20 items-center">
+
+<div>
+<h2 class="text-4xl font-heading mb-8">Ingénierie Production</h2>
+<p class="text-stone-600">Analyse thermique → Pigmentation HD → Bouclier polymère.</p>
+</div>
+
+<div>
+<div class="video-container mb-8">
+<video controls class="w-full">
+<source src="assets/IMG_8713.MP4" type="video/mp4">
+</video>
+</div>
+
+<div class="grid grid-cols-2 gap-4">
+<img src="assets/IMG_8892.JPG.jpeg" class="rounded-2xl h-44 w-full object-cover">
+<img src="assets/a-high-end-product-photograph-of-the-lat_8li9kfchTgundaxaoVZ5mQ_DKl8ymkcSIi2DG8N_oH0uw_cover_sd.jpeg"
+class="rounded-2xl h-44 w-full object-cover">
+</div>
+
+</div>
+</div>
 </section>
 
 </main>
 
 <!-- FOOTER -->
-<footer class="bg-stone-100 py-16 border-t border-stone-200">
-    <div class="container mx-auto px-4 flex justify-between items-center">
-
-        <div class="flex items-center gap-3">
-            
-            <!-- ✅ LOGO FIXED -->
-            <img src="assets/IMG_8708.PNG" alt="Logo" class="w-8 h-8 object-contain">
-            
-            <span class="font-heading text-lg text-stone-900">Custom Boots</span>
-        </div>
-
-        <div class="text-[10px] text-stone-400 font-mono">
-            © 2026 CUSTOM_BOOTS_SYSTEM // EST. MOROCCO
-        </div>
-    </div>
+<footer class="bg-stone-100 py-16">
+<div class="container mx-auto px-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<img src="assets/IMG_8708.PNG" class="w-8 h-8 object-contain">
+<span class="font-heading text-lg">Custom Boots</span>
+</div>
+<div class="text-xs text-stone-400">
+© 2026 CUSTOM_BOOTS_SYSTEM // EST. MOROCCO
+</div>
+</div>
 </footer>
+
+<script>
+new Chart(document.getElementById('popularityChart'),{
+type:'bar',
+data:{labels:['Matte Noir','Chrome Gold','Néon','Vintage','Holographic'],
+datasets:[{data:[35,22,18,15,10],backgroundColor:'#3b82f6'}]},
+options:{responsive:true,maintainAspectRatio:false}
+});
+
+new Chart(document.getElementById('serviceChart'),{
+type:'doughnut',
+data:{labels:['Basic','Player','Pro'],
+datasets:[{data:[25,55,20],backgroundColor:['#e7e5e4','#3b82f6','#1c1917']}]},
+options:{responsive:true,maintainAspectRatio:false}
+});
+</script>
 
 </body>
 </html>
