@@ -46,6 +46,7 @@
             background-color: #020617;
             color: white;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
         
         .glass {
@@ -108,9 +109,88 @@
             overflow: hidden;
             box-shadow: 0 0 50px rgba(0, 210, 255, 0.2);
         }
+
+        /* Virtual Codes Background */
+        .code-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            opacity: 0.1;
+            font-family: monospace;
+            font-size: 10px;
+            overflow: hidden;
+            color: #00d2ff;
+            line-height: 1;
+        }
+
+        /* Virtual Code Overlay for Images */
+        .img-tech-overlay {
+            position: relative;
+            overflow: hidden;
+        }
+        .img-tech-overlay::before {
+            content: "01100011 01110101 01110011 01110100 01101111 01101101";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-family: monospace;
+            font-size: 8px;
+            color: rgba(0, 210, 255, 0.6);
+            z-index: 20;
+            background: rgba(0,0,0,0.4);
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        .img-tech-overlay::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 210, 255, 0.05) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .hud-label {
+            position: absolute;
+            font-family: monospace;
+            font-size: 9px;
+            color: #00d2ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(0,0,0,0.6);
+            padding: 2px 6px;
+            border-left: 2px solid #00d2ff;
+            z-index: 25;
+            pointer-events: none;
+        }
+
+        @keyframes scan-line {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .scanner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #00d2ff;
+            box-shadow: 0 0 15px #00d2ff;
+            z-index: 30;
+            animation: scan-line 4s linear infinite;
+            opacity: 0.4;
+        }
     </style>
 </head>
 <body class="selection:bg-primary selection:text-white">
+
+    <!-- Virtual Code Background -->
+    <div id="code-background" class="code-bg"></div>
 
     <!-- Navigation -->
     <header class="fixed top-0 w-full z-50 transition-all duration-300">
@@ -182,9 +262,14 @@
                     </div>
                     
                     <div class="relative" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="relative z-10 p-2 glass rounded-[2.5rem] shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700">
-                            <!-- Hero Image from assets -->
-                            <img src="a-high-end-product-photograph-of-the-lat_8li9kfchTgundaxaoVZ5mQ_DKl8ymkcSIi2DG8N_oH0uw_cover_sd.jpeg" alt="Custom Boot Showcase" class="rounded-[2rem] w-full aspect-square object-cover shadow-inner">
+                        <!-- Tech Overlay Container -->
+                        <div class="relative z-10 p-2 glass rounded-[2.5rem] shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700 img-tech-overlay group">
+                            <div class="scanner"></div>
+                            <span class="hud-label top-10 right-10">CORE_VIRTUAL: 0x82FB</span>
+                            <span class="hud-label bottom-20 left-10">SYNC_STATUS: 99%</span>
+                            
+                            <!-- UPDATED HERO IMAGE -->
+                            <img src="a-high-end-product-photograph-of-the-lat_8li9kfchTgundaxaoVZ5mQ_DKl8ymkcSIi2DG8N_oH0uw_cover_sd.jpeg" alt="Custom Boot Showcase" class="rounded-[2rem] w-full aspect-square object-cover shadow-inner transition-transform group-hover:scale-105 duration-700">
                         </div>
                         <div class="absolute -bottom-6 -right-6 z-20 glass p-5 rounded-2xl shadow-xl flex items-center gap-4 animate-pulse">
                             <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
@@ -201,14 +286,16 @@
         </section>
 
         <!-- Video Showcase Section -->
-        <section class="py-24 bg-[#010409]">
+        <section class="py-24 bg-[#010409] relative">
             <div class="container mx-auto px-4">
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-16" data-aos="fade-up">
                         <h2 class="text-4xl font-heading mb-4 italic">L'Atelier en <span class="text-primary-vibrant">Action</span></h2>
                         <p class="text-gray-400">Regarde comment nous donnons vie à tes idées.</p>
                     </div>
-                    <div class="video-container" data-aos="zoom-in">
+                    <!-- UPDATED VIDEO & POSTER -->
+                    <div class="video-container img-tech-overlay" data-aos="zoom-in">
+                        <span class="hud-label top-4 right-4">FEED_LIVE: ATELIER_01</span>
                         <video controls class="w-full h-auto" poster="a-professional-product-photograph-of-the_daWC1lIlS6u0NDCgLA68DQ_DKl8ymkcSIi2DG8N_oH0uw_sd.jpeg">
                             <source src="IMG_8713.MP4" type="video/mp4">
                             Votre navigateur ne supporte pas la lecture de vidéos.
@@ -225,14 +312,19 @@
                     <h2 class="text-5xl font-heading mb-6 italic">Nos Dernières <span class="text-secondary">Créations</span></h2>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="glass p-3 rounded-[2rem]" data-aos="fade-up">
+                    <div class="glass p-3 rounded-[2rem] img-tech-overlay" data-aos="fade-up">
+                        <span class="hud-label top-6 right-6">DATA_01</span>
+                        <!-- UPDATED GALLERY IMG 1 -->
                         <img src="IMG_8889.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-[4/5] object-cover" alt="Custom work 1">
                     </div>
-                    <div class="glass p-3 rounded-[2rem]" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass p-3 rounded-[2rem] img-tech-overlay" data-aos="fade-up" data-aos-delay="100">
+                        <span class="hud-label top-6 right-6">DATA_02</span>
+                        <!-- UPDATED GALLERY IMG 2 -->
                         <img src="IMG_8890.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-[4/5] object-cover" alt="Custom work 2">
                     </div>
-                    <div class="glass p-3 rounded-[2rem]" data-aos="fade-up" data-aos-delay="200">
-                        <!-- Added the high-end photography path here -->
+                    <div class="glass p-3 rounded-[2rem] img-tech-overlay" data-aos="fade-up" data-aos-delay="200">
+                        <span class="hud-label top-6 right-6">DATA_03</span>
+                        <!-- UPDATED GALLERY IMG 3 -->
                         <img src="a-high-end-product-photography-shot-of-t_PcGvmEVTRImyOJWSMqqxYA_DKl8ymkcSIi2DG8N_oH0uw_sd.jpeg" class="rounded-[1.5rem] w-full aspect-[4/5] object-cover" alt="Custom work 3">
                     </div>
                 </div>
@@ -319,9 +411,16 @@
                     </div>
                     <div class="relative" data-aos="fade-left">
                         <div class="grid grid-cols-2 gap-4">
-                            <!-- Using your process images from assets -->
-                            <img src="IMG_8891.JPG.jpeg" class="rounded-3xl border border-white/10 shadow-2xl" alt="Atelier detail 1">
-                            <img src="IMG_8892.JPG.jpeg" class="rounded-3xl border border-white/10 shadow-2xl translate-y-12" alt="Atelier detail 2">
+                            <!-- UPDATED PROCESS IMG 1 -->
+                            <div class="glass p-1 rounded-3xl img-tech-overlay">
+                                <span class="hud-label top-4 right-4 text-[7px]">SCAN_A_01</span>
+                                <img src="IMG_8891.JPG.jpeg" class="rounded-2xl w-full h-full object-cover" alt="Atelier detail 1">
+                            </div>
+                            <!-- UPDATED PROCESS IMG 2 -->
+                            <div class="glass p-1 rounded-3xl img-tech-overlay translate-y-12">
+                                <span class="hud-label top-4 right-4 text-[7px]">SCAN_A_02</span>
+                                <img src="IMG_8892.JPG.jpeg" class="rounded-2xl w-full h-full object-cover" alt="Atelier detail 2">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -386,6 +485,7 @@
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => menu.classList.toggle('hidden'));
 
+        // Navbar blur effect on scroll
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header .container div');
             if (window.scrollY > 20) {
@@ -396,6 +496,35 @@
                 header.style.background = 'rgba(255, 255, 255, 0.03)';
             }
         });
+
+        // Generate Virtual Code Background
+        const codeBg = document.getElementById('code-background');
+        const characters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+        const generateCode = () => {
+            let content = '';
+            const rows = Math.ceil(window.innerHeight / 10);
+            const cols = Math.ceil(window.innerWidth / 10);
+            for(let i=0; i<rows; i++) {
+                for(let j=0; j<cols; j++) {
+                    content += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                content += '<br>';
+            }
+            codeBg.innerHTML = content;
+        };
+        generateCode();
+        window.addEventListener('resize', generateCode);
+
+        // Update random HUD values occasionally
+        const labels = document.querySelectorAll('.hud-label');
+        setInterval(() => {
+            labels.forEach(label => {
+                if(label.innerText.includes('0x')) {
+                    const hex = Math.floor(Math.random()*65535).toString(16).toUpperCase().padStart(4, '0');
+                    label.innerText = label.innerText.split(': ')[0] + ': 0x' + hex;
+                }
+            });
+        }, 2000);
     </script>
 </body>
 </html>
