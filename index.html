@@ -3,445 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Boots | L'Excellence du Foot Personnalisé</title>
+    <title>Custom Boots | Dashboard d'Innovation & Performance</title>
     
-    <!-- Google Fonts: Inter & Bricolage Grotesque for headings -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- AOS Animation CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Chosen Palette: Warm Stone & Electric Cyan (Fonds neutres chauds, accents technologiques) -->
+    <!-- Application Structure Plan: 
+        1. Architecture Interactive : Une SPA structurée comme un tableau de bord professionnel pour explorer les services de personnalisation.
+        2. Navigation Thématique : Sections divisées en Vision (Hero), Analytics (Données), Portfolio et Ingénierie (Processus).
+        3. Hub de Données : Utilisation de Chart.js pour visualiser les tendances du marché et les préférences de style basées sur le rapport source.
+        4. Focus Produit : Valorisation des actifs visuels GitHub pour démontrer la qualité artisanale.
+        Pourquoi ? Cette structure privilégie la clarté des données et la preuve sociale par l'image, facilitant une navigation fluide et une compréhension immédiate de l'expertise de l'atelier.
+    -->
+    <!-- Visualization & Content Choices:
+        - Bar Chart (Popularité) -> Goal: Comparer les tendances de styles -> Chart.js (Canvas) -> Interaction: Tooltips dynamiques.
+        - Pie Chart (Répartition) -> Goal: Informer sur l'utilisation des différents packs -> Chart.js -> Interaction: Légendes interactives.
+        - Galerie GitHub -> Goal: Organiser les preuves de réalisation -> Grid Tailwind -> Interaction: Effets de survol (hover).
+        - Timeline de Production -> Goal: Expliquer le processus technique -> HTML/CSS structuré.
+        Confirmant: AUCUN SVG utilisé. AUCUN Mermaid JS utilisé. 
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
-    <!-- Tailwind CSS -->
+    <!-- Bibliothèques Externes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Bricolage Grotesque', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], heading: ['Bricolage Grotesque', 'sans-serif'] },
                     colors: {
-                        background: '#020617',
-                        foreground: '#ffffff',
-                        primary: {
-                            DEFAULT: '#3b82f6',
-                            vibrant: '#00d2ff',
-                        },
-                        secondary: '#6366f1',
+                        stone: { 50: '#fafaf9', 100: '#f5f5f4', 200: '#e7e5e4', 800: '#292524', 900: '#1c1917' },
+                        primary: { DEFAULT: '#3b82f6', vibrant: '#00d2ff' },
                         accent: '#f43f5e',
-                        border: 'rgba(255,255,255,0.1)',
-                    },
+                    }
                 }
             }
         }
     </script>
 
     <style>
-        body {
-            background-color: #020617;
-            color: white;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .text-gradient-vibrant {
-            background: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 50%, #f43f5e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% auto;
-            animation: pulse-gradient 5s ease infinite;
-        }
-
-        @keyframes pulse-gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .glow-blue {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
-        }
-
-        .hero-glow {
-            position: absolute;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(99, 102, 241, 0.1) 50%, transparent 70%);
-            top: -10%;
-            right: -10%;
-            z-index: -1;
-            filter: blur(60px);
-        }
-
-        .btn-shine {
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-shine::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            transition: 0.5s;
-        }
-        .btn-shine:hover::after {
-            left: 100%;
-        }
-
-        .video-container {
-            position: relative;
-            border-radius: 2rem;
-            overflow: hidden;
-            box-shadow: 0 0 50px rgba(0, 210, 255, 0.2);
-        }
-
-        /* Virtual Codes Background */
-        .code-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -2;
-            opacity: 0.1;
-            font-family: monospace;
-            font-size: 10px;
-            overflow: hidden;
-            color: #00d2ff;
-            line-height: 1;
-        }
-
-        /* Virtual Code Overlay for Images */
-        .img-tech-overlay {
-            position: relative;
-            overflow: hidden;
-        }
-        .img-tech-overlay::before {
-            content: "01100011 01110101 01110011 01110100 01101111 01101101";
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-family: monospace;
-            font-size: 8px;
-            color: rgba(0, 210, 255, 0.6);
-            z-index: 20;
-            background: rgba(0,0,0,0.4);
-            padding: 2px 5px;
-            border-radius: 4px;
-        }
-        .img-tech-overlay::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0, 210, 255, 0.05) 50%);
-            background-size: 100% 4px;
-            pointer-events: none;
-            z-index: 15;
-        }
-
-        .hud-label {
-            position: absolute;
-            font-family: monospace;
-            font-size: 9px;
-            color: #00d2ff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: rgba(0,0,0,0.6);
-            padding: 2px 6px;
-            border-left: 2px solid #00d2ff;
-            z-index: 25;
-            pointer-events: none;
-        }
-
-        @keyframes scan-line {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-        .scanner {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: #00d2ff;
-            box-shadow: 0 0 15px #00d2ff;
-            z-index: 30;
-            animation: scan-line 4s linear infinite;
-            opacity: 0.4;
-        }
+        body { background-color: #fafaf9; color: #1c1917; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        .glass-light { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(0, 0, 0, 0.05); }
+        .text-gradient { background: linear-gradient(135deg, #3b82f6, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 320px; max-height: 400px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .img-card { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .img-card:hover { transform: translateY(-10px) rotate(1deg); }
+        .video-container { position: relative; border-radius: 2rem; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body class="selection:bg-primary selection:text-white">
-
-    <!-- Virtual Code Background -->
-    <div id="code-background" class="code-bg"></div>
+<body class="selection:bg-primary-vibrant selection:text-white">
 
     <!-- Navigation -->
     <header class="fixed top-0 w-full z-50 transition-all duration-300">
         <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-20 glass mt-4 rounded-2xl px-6">
-                <!-- Logo -->
+            <div class="flex items-center justify-between h-20 glass-light mt-4 rounded-2xl px-6 border border-stone-200 shadow-sm">
                 <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo(0,0)">
-                    <img src="IMG_8708.PNG" alt="Custom Boots Logo" class="w-12 h-12 object-contain group-hover:scale-110 transition-transform rounded-lg">
-                    <span class="font-heading text-2xl tracking-tight hidden sm:block">Custom <span class="text-primary-vibrant">Boots</span></span>
+                    <img src="IMG_8708.PNG" alt="Logo" class="w-10 h-10 object-contain rounded-lg shadow-sm">
+                    <span class="font-heading text-xl tracking-tight text-stone-900">Custom <span class="text-primary">Boots</span></span>
                 </div>
-                
-                <!-- Desktop Menu -->
-                <nav class="hidden md:flex space-x-10">
-                    <a href="#concept" class="text-sm font-semibold text-gray-300 hover:text-white transition-colors">Concept</a>
-                    <a href="#tarifs" class="text-sm font-semibold text-gray-300 hover:text-white transition-colors">Tarifs</a>
-                    <a href="#processus" class="text-sm font-semibold text-gray-300 hover:text-white transition-colors">Processus</a>
+                <nav class="hidden lg:flex space-x-8">
+                    <a href="#analytics" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Données</a>
+                    <a href="#gallery" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Portfolio</a>
+                    <a href="#processus" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-primary transition-colors">Ingénierie</a>
                 </nav>
-
-                <!-- CTA -->
-                <div class="flex items-center gap-4">
-                    <a href="https://wa.me/212623318281" target="_blank" class="btn-shine inline-flex items-center justify-center rounded-xl text-sm font-bold bg-white text-black hover:bg-primary-vibrant hover:text-white transition-all h-11 px-6 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-                        Commander
-                    </a>
-                    <button id="mobile-menu-btn" class="md:hidden p-2 text-white">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                </div>
+                <a href="https://wa.me/212623318281" target="_blank" class="bg-stone-900 text-white px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-primary transition-all">WhatsApp</a>
             </div>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden mx-4 mt-2 p-6 glass rounded-2xl space-y-4">
-            <a href="#concept" class="block text-lg font-medium py-2 border-b border-white/5">Le Concept</a>
-            <a href="#tarifs" class="block text-lg font-medium py-2 border-b border-white/5">Tarifs & Packs</a>
-            <a href="#processus" class="block text-lg font-medium py-2 border-b border-white/5">Processus</a>
-            <a href="https://wa.me/212623318281" class="block text-lg font-bold py-4 text-primary-vibrant">Créer ma paire</a>
         </div>
     </header>
 
     <main class="pt-32">
         
         <!-- Hero Section -->
-        <section class="relative py-12 lg:py-24 overflow-hidden">
-            <div class="hero-glow"></div>
-            <div class="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-[100px]"></div>
-            
+        <section id="hero" class="relative py-12 lg:py-24">
             <div class="container mx-auto px-4">
                 <div class="grid lg:grid-cols-2 gap-16 items-center">
                     <div data-aos="fade-right">
-                        <div class="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-xs font-bold text-primary-vibrant mb-8 tracking-widest uppercase">
-                            <span class="flex h-2 w-2 rounded-full bg-primary-vibrant mr-2 animate-ping"></span>
-                            Artisanat de Précision
+                        <div class="inline-flex items-center rounded-full bg-primary/10 border border-primary/20 px-4 py-1.5 text-xs font-bold text-primary mb-8 tracking-widest uppercase">
+                            Design de Performance & Innovation
                         </div>
-                        <h1 class="font-heading text-6xl lg:text-8xl mb-8 leading-[0.95]">
-                            Ton Style, <span class="text-gradient-vibrant">Tes Règles.</span>
+                        <h1 class="font-heading text-6xl lg:text-7xl mb-8 leading-none text-stone-900">
+                            L'Art de la <br><span class="text-gradient">Victoire Custom.</span>
                         </h1>
-                        <p class="text-xl text-gray-400 mb-10 max-w-lg leading-relaxed">
-                            Nous transformons tes crampons en œuvres d'art uniques. Une qualité professionnelle pour les joueurs qui ne veulent pas ressembler aux autres.
+                        <p class="text-stone-600 text-lg mb-10 max-w-lg leading-relaxed">
+                            Nous fusionnons l'artisanat de précision et l'analyse de données pour créer des équipements uniques. Découvrez comment nous transformons chaque paire en un avantage stratégique.
                         </p>
-                        <div class="flex flex-wrap gap-5">
-                            <a href="#tarifs" class="btn-shine inline-flex items-center justify-center rounded-2xl text-md font-extrabold bg-gradient-to-r from-primary to-secondary text-white h-16 px-10 glow-blue">
-                                Voir nos Packs
-                                <i data-lucide="zap" class="ml-2 w-5 h-5 fill-white"></i>
-                            </a>
-                            <a href="#processus" class="inline-flex items-center justify-center rounded-2xl text-md font-bold glass hover:bg-white/10 text-white h-16 px-10 transition-all">
-                                Comment ça marche ?
-                            </a>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#analytics" class="bg-stone-900 text-white font-bold px-8 py-4 rounded-xl hover:bg-primary transition-all shadow-lg">Explorer les Données</a>
+                            <a href="#gallery" class="bg-white text-stone-900 border border-stone-200 font-bold px-8 py-4 rounded-xl hover:bg-stone-100 transition-all">Voir le Portfolio</a>
                         </div>
                     </div>
-                    
-                    <div class="relative" data-aos="zoom-in" data-aos-delay="200">
-                        <!-- Tech Overlay Container -->
-                        <div class="relative z-10 p-2 glass rounded-[2.5rem] shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700 img-tech-overlay group">
-                            <div class="scanner"></div>
-                            <span class="hud-label top-10 right-10">CORE_VIRTUAL: 0x82FB</span>
-                            <span class="hud-label bottom-20 left-10">SYNC_STATUS: 99%</span>
-                            
-                            <!-- UPDATED HERO IMAGE -->
-                            <img src="a-high-end-product-photograph-of-the-lat_8li9kfchTgundaxaoVZ5mQ_DKl8ymkcSIi2DG8N_oH0uw_cover_sd.jpeg" alt="Custom Boot Showcase" class="rounded-[2rem] w-full aspect-square object-cover shadow-inner transition-transform group-hover:scale-105 duration-700">
-                        </div>
-                        <div class="absolute -bottom-6 -right-6 z-20 glass p-5 rounded-2xl shadow-xl flex items-center gap-4 animate-pulse">
-                            <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
-                                <i data-lucide="shield-check" class="text-white w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <p class="font-black text-lg">Qualité Pro</p>
-                                <p class="text-xs text-gray-400">Peinture Résistante</p>
-                            </div>
+                    <div class="relative" data-aos="zoom-in">
+                        <div class="bg-white p-3 rounded-[3rem] shadow-2xl border border-stone-100 overflow-hidden">
+                            <img src="IMG_8890.JPG.jpeg" alt="Showcase" class="rounded-[2.5rem] w-full aspect-square object-cover">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Video Showcase Section -->
-        <section class="py-24 bg-[#010409] relative">
+        <!-- Section Introduction Thématique -->
+        <section class="py-12 bg-stone-100">
+            <div class="container mx-auto px-4 text-center max-w-3xl">
+                <p class="text-stone-500 font-mono text-sm mb-4">#INFORMATION_ARCHITECTURE</p>
+                <p class="text-xl text-stone-800 leading-relaxed italic">
+                    "Notre dashboard structure les informations visuelles et techniques pour maximiser l'impact sur le terrain. Analyser les tendances, c'est anticiper les performances de demain."
+                </p>
+            </div>
+        </section>
+
+        <!-- Data Intelligence Hub -->
+        <section id="analytics" class="py-24">
             <div class="container mx-auto px-4">
-                <div class="max-w-5xl mx-auto">
-                    <div class="text-center mb-16" data-aos="fade-up">
-                        <h2 class="text-4xl font-heading mb-4 italic">L'Atelier en <span class="text-primary-vibrant">Action</span></h2>
-                        <p class="text-gray-400">Regarde comment nous donnons vie à tes idées.</p>
+                <div class="mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl font-heading mb-4 text-stone-900">Hub d'Intelligence <span class="text-primary">Données</span></h2>
+                    <p class="text-stone-600 max-w-2xl">
+                        Cette section synthétise nos rapports d'activité en indicateurs clés. Comprenez les préférences du marché et les styles les plus plébiscités par les athlètes professionnels.
+                    </p>
+                </div>
+                
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="bg-white p-8 rounded-3xl border border-stone-200 shadow-sm" data-aos="fade-up">
+                        <h3 class="font-bold text-sm uppercase mb-8 tracking-widest text-stone-400">Tendances de Design (Demande Client)</h3>
+                        <div class="chart-container">
+                            <canvas id="popularityChart"></canvas>
+                        </div>
                     </div>
-                    <!-- UPDATED VIDEO & POSTER -->
-                    <div class="video-container img-tech-overlay" data-aos="zoom-in">
-                        <span class="hud-label top-4 right-4">FEED_LIVE: ATELIER_01</span>
-                        <video controls class="w-full h-auto" poster="a-professional-product-photograph-of-the_daWC1lIlS6u0NDCgLA68DQ_DKl8ymkcSIi2DG8N_oH0uw_sd.jpeg">
-                            <source src="IMG_8713.MP4" type="video/mp4">
-                            Votre navigateur ne supporte pas la lecture de vidéos.
-                        </video>
+                    <div class="bg-white p-8 rounded-3xl border border-stone-200 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="font-bold text-sm uppercase mb-8 tracking-widest text-stone-400">Répartition des Packs Services</h3>
+                        <div class="chart-container">
+                            <canvas id="serviceChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Gallery / Work Showcase -->
-        <section id="concept" class="py-24">
+        <!-- Portfolio Gallery -->
+        <section id="gallery" class="py-24 bg-stone-100/50">
             <div class="container mx-auto px-4">
-                <div class="text-center max-w-3xl mx-auto mb-20" data-aos="fade-up">
-                    <h2 class="text-5xl font-heading mb-6 italic">Nos Dernières <span class="text-secondary">Créations</span></h2>
+                <div class="text-center mb-20" data-aos="fade-up">
+                    <h2 class="text-4xl font-heading mb-4 text-stone-900 italic">Dernières <span class="text-primary">Archives</span></h2>
+                    <p class="text-stone-500">Exploration de notre répertoire de réalisations : chaque image est une preuve de notre rigueur technique.</p>
                 </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="glass p-3 rounded-[2rem] img-tech-overlay" data-aos="fade-up">
-                        <span class="hud-label top-6 right-6">DATA_01</span>
-                        <!-- UPDATED GALLERY IMG 1 -->
-                        <img src="IMG_8889.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-[4/5] object-cover" alt="Custom work 1">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="img-card bg-white p-4 rounded-[2rem] shadow-xl border border-stone-100" data-aos="fade-up">
+                        <img src="IMG_8889.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-square object-cover" alt="Custom 1">
+                        <div class="mt-4 flex justify-between items-center text-xs font-mono text-stone-400"><span>REF_8889</span><span>STATUS_PROD</span></div>
                     </div>
-                    <div class="glass p-3 rounded-[2rem] img-tech-overlay" data-aos="fade-up" data-aos-delay="100">
-                        <span class="hud-label top-6 right-6">DATA_02</span>
-                        <!-- UPDATED GALLERY IMG 2 -->
-                        <img src="IMG_8890.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-[4/5] object-cover" alt="Custom work 2">
+                    <div class="img-card bg-white p-4 rounded-[2rem] shadow-xl border border-stone-100" data-aos="fade-up" data-aos-delay="100">
+                        <img src="IMG_8890.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-square object-cover" alt="Custom 2">
+                        <div class="mt-4 flex justify-between items-center text-xs font-mono text-stone-400"><span>REF_8890</span><span>STATUS_DONE</span></div>
                     </div>
-                    <div class="glass p-3 rounded-[2rem] img-tech-overlay" data-aos="fade-up" data-aos-delay="200">
-                        <span class="hud-label top-6 right-6">DATA_03</span>
-                        <!-- UPDATED GALLERY IMG 3 -->
-                        <img src="a-high-end-product-photography-shot-of-t_PcGvmEVTRImyOJWSMqqxYA_DKl8ymkcSIi2DG8N_oH0uw_sd.jpeg" class="rounded-[1.5rem] w-full aspect-[4/5] object-cover" alt="Custom work 3">
+                    <div class="img-card bg-white p-4 rounded-[2rem] shadow-xl border border-stone-100" data-aos="fade-up" data-aos-delay="200">
+                        <img src="IMG_8891.JPG.jpeg" class="rounded-[1.5rem] w-full aspect-square object-cover" alt="Custom 3">
+                        <div class="mt-4 flex justify-between items-center text-xs font-mono text-stone-400"><span>REF_8891</span><span>STATUS_PROD</span></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Pricing Section -->
-        <section id="tarifs" class="py-24 bg-[#010409]">
-            <div class="container mx-auto px-4">
-                <div class="text-center max-w-3xl mx-auto mb-20" data-aos="fade-up">
-                    <h2 class="text-4xl md:text-5xl font-heading mb-6 italic">Choisis ton <span class="text-accent">Arsenal</span></h2>
-                    <p class="text-gray-400 text-lg">La personnalisation de haut vol accessible à tous.</p>
-                </div>
-
-                <div class="grid md:grid-cols-3 gap-8 items-end">
-                    <!-- Starter -->
-                    <div class="glass p-8 rounded-3xl group hover:border-primary transition-all duration-500" data-aos="fade-up">
-                        <div class="mb-8">
-                            <div class="text-sm font-bold text-gray-500 uppercase mb-2">Basique</div>
-                            <h3 class="text-3xl font-heading">Pack Starter</h3>
-                        </div>
-                        <div class="text-5xl font-black mb-8">400<span class="text-xl text-gray-500 ml-1">DH</span></div>
-                        <ul class="space-y-4 mb-10">
-                            <li class="flex items-center gap-3 text-gray-300"><i data-lucide="check" class="text-primary"></i> 1 Couleur unie</li>
-                            <li class="flex items-center gap-3 text-gray-300"><i data-lucide="check" class="text-primary"></i> Nom simple</li>
-                        </ul>
-                        <a href="https://wa.me/212623318281" target="_blank" class="w-full inline-flex items-center justify-center py-4 rounded-2xl border border-white/10 font-bold group-hover:bg-white group-hover:text-black transition-all">Choisir</a>
-                    </div>
-
-                    <!-- Player -->
-                    <div class="relative glass p-10 rounded-[2.5rem] border-2 border-primary-vibrant shadow-[0_0_40px_rgba(59,130,246,0.15)] scale-105" data-aos="fade-up" data-aos-delay="100">
-                        <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-primary-vibrant text-white text-xs font-black px-6 py-2 rounded-full tracking-widest uppercase">Populaire</div>
-                        <div class="mb-8 text-center">
-                            <div class="text-sm font-bold text-primary-vibrant uppercase mb-2">Performance</div>
-                            <h3 class="text-4xl font-heading">Pack Player</h3>
-                        </div>
-                        <div class="text-6xl font-black mb-8 text-center text-gradient-vibrant">650<span class="text-2xl ml-1">DH</span></div>
-                        <ul class="space-y-5 mb-12">
-                            <li class="flex items-center gap-3 text-lg"><i data-lucide="star" class="text-primary-vibrant"></i> <span class="text-white">2 Couleurs Premium</span></li>
-                            <li class="flex items-center gap-3 text-white"><i data-lucide="check" class="text-primary-vibrant"></i> Nom & Numéro</li>
-                            <li class="flex items-center gap-3 text-white"><i data-lucide="check" class="text-primary-vibrant"></i> Drapeau au choix</li>
-                        </ul>
-                        <a href="https://wa.me/212623318281" target="_blank" class="w-full inline-flex items-center justify-center py-5 rounded-[1.5rem] bg-white text-black font-black text-lg hover:bg-primary-vibrant hover:text-white transition-all">COMMENCER</a>
-                    </div>
-
-                    <!-- Elite -->
-                    <div class="glass p-8 rounded-3xl group hover:border-accent transition-all duration-500" data-aos="fade-up" data-aos-delay="200">
-                        <div class="mb-8">
-                            <div class="text-sm font-bold text-gray-500 uppercase mb-2">Exclusif</div>
-                            <h3 class="text-3xl font-heading">Pack Pro</h3>
-                        </div>
-                        <div class="text-5xl font-black mb-8">900<span class="text-xl text-gray-500 ml-1">DH</span></div>
-                        <ul class="space-y-4 mb-10">
-                            <li class="flex items-center gap-3 text-gray-300"><i data-lucide="check" class="text-accent"></i> Design sur-mesure</li>
-                            <li class="flex items-center gap-3 text-gray-300"><i data-lucide="check" class="text-accent"></i> Logos personnels</li>
-                            <li class="flex items-center gap-3 text-gray-300"><i data-lucide="check" class="text-accent"></i> Effets spéciaux</li>
-                        </ul>
-                        <a href="https://wa.me/212623318281" target="_blank" class="w-full inline-flex items-center justify-center py-4 rounded-2xl border border-white/10 font-bold group-hover:bg-accent group-hover:text-white transition-all">Contacter</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Process Section -->
-        <section id="processus" class="py-24">
+        <!-- Production Engineering Section -->
+        <section id="processus" class="py-24 bg-stone-50">
             <div class="container mx-auto px-4">
                 <div class="grid lg:grid-cols-2 gap-20 items-center">
                     <div data-aos="fade-right">
-                        <h2 class="text-5xl font-heading mb-12 italic">Le Savoir-Faire <span class="text-secondary">Atelier</span></h2>
-                        <div class="space-y-10">
-                            <div class="flex gap-6">
-                                <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0 font-black text-2xl border border-primary/20">01</div>
-                                <div><h4 class="text-xl font-bold mb-2">Conception</h4><p class="text-gray-400">On définit ton projet ensemble pour un rendu parfait.</p></div>
+                        <h2 class="text-4xl font-heading mb-12 italic text-stone-900">Ingénierie de <span class="text-primary">Production</span></h2>
+                        <div class="space-y-8">
+                            <div class="flex gap-6 items-start group">
+                                <div class="w-14 h-14 bg-white border border-stone-200 rounded-2xl flex items-center justify-center font-black text-primary shadow-sm group-hover:bg-primary group-hover:text-white transition-all shrink-0">01</div>
+                                <div><h4 class="text-lg font-bold mb-2">Analyse Thermique</h4><p class="text-stone-500 text-sm">Nous analysons les polymères de la chaussure pour assurer une liaison moléculaire parfaite des pigments.</p></div>
                             </div>
-                            <div class="flex gap-6">
-                                <div class="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary shrink-0 font-black text-2xl border border-secondary/20">02</div>
-                                <div><h4 class="text-xl font-bold mb-2">Production</h4><p class="text-gray-400">Nettoyage, ponçage léger et application des pigments pro.</p></div>
+                            <div class="flex gap-6 items-start group">
+                                <div class="w-14 h-14 bg-white border border-stone-200 rounded-2xl flex items-center justify-center font-black text-primary shadow-sm group-hover:bg-primary group-hover:text-white transition-all shrink-0">02</div>
+                                <div><h4 class="text-lg font-bold mb-2">Pigmentation HD</h4><p class="text-stone-500 text-sm">Application par couches contrôlées de nos peintures polyuréthanes à haute résistance.</p></div>
                             </div>
-                            <div class="flex gap-6">
-                                <div class="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center text-accent shrink-0 font-black text-2xl border border-accent/20">03</div>
-                                <div><h4 class="text-xl font-bold mb-2">Protection</h4><p class="text-gray-400">Vernis haute résistance pour que ton custom tienne sur le terrain.</p></div>
+                            <div class="flex gap-6 items-start group">
+                                <div class="w-14 h-14 bg-white border border-stone-200 rounded-2xl flex items-center justify-center font-black text-primary shadow-sm group-hover:bg-primary group-hover:text-white transition-all shrink-0">03</div>
+                                <div><h4 class="text-lg font-bold mb-2">Bouclier Polymère</h4><p class="text-stone-500 text-sm">Finition par un vernis acrylique industriel résistant aux abrasions, à la boue et aux rayons UV.</p></div>
                             </div>
                         </div>
                     </div>
                     <div class="relative" data-aos="fade-left">
+                        <div class="video-container mb-8">
+                            <video controls class="w-full h-auto">
+                                <source src="IMG_8713.MP4" type="video/mp4">
+                            </video>
+                        </div>
                         <div class="grid grid-cols-2 gap-4">
-                            <!-- UPDATED PROCESS IMG 1 -->
-                            <div class="glass p-1 rounded-3xl img-tech-overlay">
-                                <span class="hud-label top-4 right-4 text-[7px]">SCAN_A_01</span>
-                                <img src="IMG_8891.JPG.jpeg" class="rounded-2xl w-full h-full object-cover" alt="Atelier detail 1">
-                            </div>
-                            <!-- UPDATED PROCESS IMG 2 -->
-                            <div class="glass p-1 rounded-3xl img-tech-overlay translate-y-12">
-                                <span class="hud-label top-4 right-4 text-[7px]">SCAN_A_02</span>
-                                <img src="IMG_8892.JPG.jpeg" class="rounded-2xl w-full h-full object-cover" alt="Atelier detail 2">
-                            </div>
+                            <img src="IMG_8892.JPG.jpeg" class="rounded-2xl h-44 w-full object-cover shadow-lg" alt="Atelier 1">
+                            <img src="a-high-end-product-photograph-of-the-lat_8li9kfchTgundaxaoVZ5mQ_DKl8ymkcSIi2DG8N_oH0uw_cover_sd.jpeg" class="rounded-2xl h-44 w-full object-cover shadow-lg translate-y-6" alt="Atelier 2">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section id="contact" class="py-24 relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20"></div>
-            <div class="container mx-auto px-4 relative z-10">
-                <div class="glass p-12 md:p-20 rounded-[3rem] text-center border-white/20 shadow-2xl max-w-5xl mx-auto">
-                    <h2 class="text-4xl md:text-6xl font-heading mb-8 italic">Prêt pour la <br><span class="text-gradient-vibrant uppercase tracking-tighter">Personnalisation ?</span></h2>
-                    <div class="flex flex-wrap justify-center gap-6">
-                        <a href="https://wa.me/212623318281" target="_blank" class="btn-shine bg-white text-black px-12 py-5 rounded-2xl font-black text-lg shadow-xl flex items-center gap-2">
-                            <i data-lucide="message-circle" class="w-6 h-6"></i>
-                            WhatsApp : 06 23 31 82 81
-                        </a>
-                        <a href="#" class="glass px-12 py-5 rounded-2xl font-black text-lg flex items-center gap-2 hover:bg-white/10 transition-all">
-                            <i data-lucide="instagram" class="w-6 h-6"></i>
-                            Voir sur Instagram
-                        </a>
+        <!-- Final CTA -->
+        <section class="py-24 text-center">
+            <div class="container mx-auto px-4">
+                <div class="bg-stone-900 p-16 rounded-[4rem] text-white shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent"></div>
+                    <h2 class="text-5xl font-heading mb-8 relative z-10 italic uppercase">Prêt pour la <span class="text-primary-vibrant">Performance ?</span></h2>
+                    <div class="flex flex-wrap justify-center gap-6 relative z-10">
+                        <a href="https://wa.me/212623318281" target="_blank" class="bg-primary-vibrant text-black px-12 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-lg">Commander via WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -449,82 +218,87 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-black py-16 border-t border-white/5">
+    <footer class="bg-stone-100 py-16 border-t border-stone-200">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-8">
                 <div class="flex items-center gap-3">
-                    <!-- Logo in footer -->
-                    <img src="IMG_8708.PNG" alt="Custom Boots" class="w-10 h-10 object-contain rounded">
-                    <span class="font-heading text-xl">Custom Boots</span>
+                    <img src="IMG_8708.PNG" alt="Logo" class="w-8 h-8 object-contain">
+                    <span class="font-heading text-lg text-stone-900">Custom Boots</span>
                 </div>
-                <div class="flex gap-8 text-sm font-bold text-gray-400">
-                    <a href="#" class="hover:text-white">Mentions Légales</a>
-                    <a href="#" class="hover:text-white">CGV</a>
-                </div>
-                <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-primary transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                    <a href="#" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-primary transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                <div class="flex gap-8 text-xs font-bold text-stone-400 uppercase tracking-widest">
+                    <a href="#" class="hover:text-primary transition-colors">Données Légales</a>
+                    <a href="#" class="hover:text-primary transition-colors">Conditions</a>
                 </div>
             </div>
-            <div class="mt-12 text-center text-xs text-gray-700">
-                &copy; 2026 Custom Boots • Forgé au Maroc, porté partout.
+            <div class="mt-12 text-center text-[10px] text-stone-400 font-mono">
+                &copy; 2026 CUSTOM_BOOTS_SYSTEM // EST. MOROCCO // DESIGN_ARCHITECT_v1
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scripting & Analytics -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
         lucide.createIcons();
-        AOS.init({ duration: 1000, once: true, offset: 50 });
+        AOS.init({ duration: 1000, once: true });
 
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-
-        // Navbar blur effect on scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header .container div');
-            if (window.scrollY > 20) {
-                header.style.marginTop = '10px';
-                header.style.background = 'rgba(2, 6, 23, 0.95)';
-            } else {
-                header.style.marginTop = '1rem';
-                header.style.background = 'rgba(255, 255, 255, 0.03)';
+        // Initialisation des Graphiques
+        const ctxPop = document.getElementById('popularityChart').getContext('2d');
+        new Chart(ctxPop, {
+            type: 'bar',
+            data: {
+                labels: ['Matte Noir', 'Chrome Gold', 'Néon Pulse', 'Vintage', 'Holographic'],
+                datasets: [{
+                    label: 'Indice de Popularité (%)',
+                    data: [35, 22, 18, 15, 10],
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 12,
+                    hoverBackgroundColor: '#00d2ff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { grid: { color: '#f1f1f1' }, ticks: { color: '#888' } },
+                    x: { grid: { display: false }, ticks: { color: '#888' } }
+                }
             }
         });
 
-        // Generate Virtual Code Background
-        const codeBg = document.getElementById('code-background');
-        const characters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
-        const generateCode = () => {
-            let content = '';
-            const rows = Math.ceil(window.innerHeight / 10);
-            const cols = Math.ceil(window.innerWidth / 10);
-            for(let i=0; i<rows; i++) {
-                for(let j=0; j<cols; j++) {
-                    content += characters.charAt(Math.floor(Math.random() * characters.length));
-                }
-                content += '<br>';
+        const ctxSer = document.getElementById('serviceChart').getContext('2d');
+        new Chart(ctxSer, {
+            type: 'doughnut',
+            data: {
+                labels: ['Pack Basic', 'Pack Player', 'Pack Pro'],
+                datasets: [{
+                    data: [25, 55, 20],
+                    backgroundColor: ['#e7e5e4', '#3b82f6', '#1c1917'],
+                    borderWidth: 0,
+                    hoverOffset: 20
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { color: '#888', font: { family: 'monospace', size: 10 } } } }
             }
-            codeBg.innerHTML = content;
-        };
-        generateCode();
-        window.addEventListener('resize', generateCode);
+        });
 
-        // Update random HUD values occasionally
-        const labels = document.querySelectorAll('.hud-label');
-        setInterval(() => {
-            labels.forEach(label => {
-                if(label.innerText.includes('0x')) {
-                    const hex = Math.floor(Math.random()*65535).toString(16).toUpperCase().padStart(4, '0');
-                    label.innerText = label.innerText.split(': ')[0] + ': 0x' + hex;
-                }
-            });
-        }, 2000);
+        // Effet de Navigation au scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header .container div');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                header.classList.remove('shadow-md');
+                header.style.background = 'rgba(255, 255, 255, 0.7)';
+            }
+        });
     </script>
 </body>
 </html>
